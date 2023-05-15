@@ -1,11 +1,10 @@
 package dev.minhtuan07.chatapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
-import dev.minhtuan07.chatapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import dev.minhtuan07.chatapp.databinding.ActivitySignInBinding;
 
 public class SignInActivity extends AppCompatActivity {
@@ -22,4 +21,5 @@ public class SignInActivity extends AppCompatActivity {
         binding.textCreateNewAccount.setOnClickListener(v->
                 startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
     }
+
 }

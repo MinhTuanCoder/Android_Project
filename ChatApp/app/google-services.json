@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "913443888616",
+    "project_id": "chat-app-982bf",
+    "storage_bucket": "chat-app-982bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913443888616:android:7b9c674d779f5e227b585d",
+        "android_client_info": {
+          "package_name": "dev.minhtuan07.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913443888616-mncc3v0pgc6g9a8vdk2fqm824lm4ch2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCri6XPT94E14zq7JanhR_XtMhqUrztj9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913443888616-mncc3v0pgc6g9a8vdk2fqm824lm4ch2p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

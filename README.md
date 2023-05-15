@@ -15,3 +15,5 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/primary</item>
     </style>
+
+
