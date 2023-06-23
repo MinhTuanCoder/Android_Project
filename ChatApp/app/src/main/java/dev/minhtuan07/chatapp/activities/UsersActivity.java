@@ -20,7 +20,7 @@ import dev.minhtuan07.chatapp.models.User;
 import dev.minhtuan07.chatapp.untilities.Constants;
 import dev.minhtuan07.chatapp.untilities.PreferenceManager;
 
-public class UsersActivity extends AppCompatActivity implements UserListener {
+public class UsersActivity extends BaseActivity implements UserListener {
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
 

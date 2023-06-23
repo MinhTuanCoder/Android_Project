@@ -31,7 +31,7 @@ import dev.minhtuan07.chatapp.models.User;
 import dev.minhtuan07.chatapp.untilities.Constants;
 import dev.minhtuan07.chatapp.untilities.PreferenceManager;
 
-public class MainActivity extends AppCompatActivity implements ConversionListener {
+public class MainActivity extends BaseActivity implements ConversionListener {
     private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
     private List<ChatMessage> conversations;
