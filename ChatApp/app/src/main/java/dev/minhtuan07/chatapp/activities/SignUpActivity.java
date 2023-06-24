@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -87,33 +88,53 @@ public class SignUpActivity extends AppCompatActivity {
     private  void showToast(String message){
         Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
     }
-    private  void signUp(){
-    loading(true);
+    private void signUp() {
+        loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        HashMap<String, Object> user = new HashMap<>();
-        user.put(Constants.KEY_NAME,((EditText) findViewById(R.id.inputName)).getText().toString());
-        user.put(Constants.KEY_EMAIL,((EditText) findViewById(R.id.inputEmail)).getText().toString());
-        user.put(Constants.KEY_PASSWORD,((EditText) findViewById(R.id.inputPassword)).getText().toString());
-        user.put(Constants.KEY_IMAGE,encodedImage);
+        String email = ((EditText) findViewById(R.id.inputEmail)).getText().toString();
+
+        // Kiểm tra email đã tồn tại trong Firestore hay chưa
         database.collection(Constants.KEY_COLLECTION_USERS)
-                .add(user)
-                .addOnSuccessListener(documentReference -> {
-                    loading(false);
-                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
-                    preferenceManager.putString(Constants.KEY_USER_ID,documentReference.getId());
-                    preferenceManager.putString(Constants.KEY_NAME,((EditText) findViewById(R.id.inputName)).getText().toString());
-                    preferenceManager.putString(Constants.KEY_IMAGE,encodedImage);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                })
-                .addOnFailureListener(exception ->{
-                    loading(false);
-                    showToast(exception.getMessage());
-
-
+                .whereEqualTo(Constants.KEY_EMAIL, email)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (!querySnapshot.isEmpty()) {
+                            // Email đã được sử dụng, hiển thị thông báo lỗi
+                            showToast("Email already exists");
+                            loading(false);
+                        } else {
+                            // Email chưa được sử dụng, thêm vào Firestore
+                            HashMap<String, Object> user = new HashMap<>();
+                            user.put(Constants.KEY_NAME, ((EditText) findViewById(R.id.inputName)).getText().toString());
+                            user.put(Constants.KEY_EMAIL, email);
+                            user.put(Constants.KEY_PASSWORD, ((EditText) findViewById(R.id.inputPassword)).getText().toString());
+                            user.put(Constants.KEY_IMAGE, encodedImage);
+                            database.collection(Constants.KEY_COLLECTION_USERS)
+                                    .add(user)
+                                    .addOnSuccessListener(documentReference -> {
+                                        loading(false);
+                                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                        preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
+                                        preferenceManager.putString(Constants.KEY_NAME, ((EditText) findViewById(R.id.inputName)).getText().toString());
+                                        preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    })
+                                    .addOnFailureListener(exception -> {
+                                        loading(false);
+                                        showToast(exception.getMessage());
+                                    });
+                        }
+                    } else {
+                        loading(false);
+                        showToast(task.getException().getMessage());
+                    }
                 });
     }
+
 
     private String encodeImage(Bitmap bitmap){
         int previewWidth = 150;
@@ -173,8 +194,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         else return true;
-
-
     }
     private void loading(Boolean isLoading){
         if(isLoading){

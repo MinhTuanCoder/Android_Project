@@ -1,5 +1,7 @@
 package dev.minhtuan07.chatapp.untilities;
 
+import java.util.HashMap;
+
 public class Constants
 {
     public static final String KEY_COLLECTION_USERS = "users";
@@ -25,6 +27,28 @@ public class Constants
     public static final String KEY_RECEIVER_IMAGE = "receiverImage";
     public static final String KEY_LAST_MESSAGE = "lastMessage";
     public static final String KEY_AVAILABILITY = "availability";
+    public static final String REMOTE_MSG_AUTHORIZATION = "Authorization";
+    public static final String REMOTE_MSG_CONTENT_TYPE = "Content-Type";
+    public static final String REMOTE_MSG_DATA = "data";
+    public static final String REMOTE_MSG_REGISTRATION_IDS = "registration_ids";
+    public static HashMap<String,String> remoteMsgHeaders = null;
+
+    public static HashMap<String,String> getremoteMsgHeaders(){
+        if(remoteMsgHeaders==null){
+            remoteMsgHeaders = new HashMap<>();
+            remoteMsgHeaders.put(
+                    REMOTE_MSG_AUTHORIZATION,
+                    //   AIzaSyCri6XPT94E14zq7JanhR_XtMhqUrztj9c
+                   // BJSEqti-UN5T3uevx58K7l5nvgg22tnSTpFOMjOTGM-ZdpwwGHUz8vUebqMb2YM1PvyE31htbaNy9X7tsSg-O8k
+                    "key=AAAA1K1_neg:APA91bEZFQtZuoTAGsfNYap0x1HkocwlxUE5WqtVxC-R1NEna9fQ7v2Xx9ol_31MwLkH7mmpSsnhgcH4COkV5ZrPXjqFA0e4S87-YoE0AaPZ-n5P1gdS0QfCuvagxb7E3Q-T6gcg5utb"
+            );
+            remoteMsgHeaders.put(
+                    REMOTE_MSG_CONTENT_TYPE,
+                    "application/json"
+            );
+        }
+        return remoteMsgHeaders ;
+    }
 
 
 
